@@ -20,7 +20,7 @@ def add_time_topicture(image_name,text,seq,font=font):
 	# 设置文本文字位置
 	text_xy = (rgba_image.size[0] - text_size_x, rgba_image.size[1] - text_size_y)
 	# 设置文本颜色和透明度
-	image_draw.text(text_xy, text, font=font, fill=(255, 255, 255, 180))
+	image_draw.text(text_xy, text, font=font, fill=(125, 0, 125, 200))
 
 	image_with_text = Image.alpha_composite(rgba_image, text_overlay)#融合两张图片
 	#image_with_text.show()
@@ -31,18 +31,19 @@ def add_time_topicture(image_name,text,seq,font=font):
 def main_process():
 
 	#遍历文件夹
-	BaseDir=r'E:\GitHub' #字符串前加r表示防止转义字符
+	BaseDir=r'F:\DCIM' #字符串前加r表示防止转义字符
 	#rootDir='E:\\GitHub\\' 
 	seq=0
 	#遍历目录
 	for root,dirs,files in os.walk(BaseDir):
 		for file in files:
-			if os.path.splitext(file)[1] == '.jpg':
+			if os.path.splitext(file)[1] == '.JPG':
 				seq=seq+1
 				file_name = os.path.join(root,file)
+				print(file_name + str(seq))
 				fileInfo = os.stat(file_name)
 				im_before = Image.open(file_name)
-				add_time_topicture(im_before,secondsToStr(fileInfo.st_ctime),seq,font)
+				add_time_topicture(im_before,secondsToStr(fileInfo.st_mtime),seq,font)
 
 main_process()
 	
